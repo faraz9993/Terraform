@@ -1,0 +1,94 @@
+Functions and conditional expressions
+In this lab, we will work on functions. Just like we did in the lecture, make use of the terraform console command through this lab to test different functions, and see how they transform and manipulate values.
+
+Que: What value does floor(10.9) produce?
+Ans: echo "floor(10.9)" | terraform console
+10
+
+Que: What value does title("user-generated password file") produce?
+Ans: echo 'title("user-generated password file")' | terraform console
+Ans "User-Generated Password File"
+
+
+Que: Navigate to the configuration directory /root/terraform-projects/project-sonic. Here, we have a number of variables declared in the variables.tf file.
+What type of variable is cloud_users?
+Ans: 
+variable "region" {
+default = "ca-central-1"
+}
+variable "cloud_users" {
+type = string
+default = "andrew:ken:faraz:mutsumi:peter:steve:braja"
+}
+variable "bucket" {
+default = "sonic-media"
+}
+
+variable "media" {
+type = set(string)
+default = [ 
+"/media/tails.jpg",
+"/media/eggman.jpg",
+"/media/ultrasonic.jpg",
+"/media/knuckles.jpg",
+"/media/shadow.jpg",
+]
+}
+variable "sf" {
+type = list
+default = [
+"ryu",
+"ken",
+"akuma",
+"seth",
+"zangief",
+"poison",
+"gen",
+"oni",
+"thawk",
+"fang",
+"rashid",
+"birdie",
+"sagat",
+"bison",
+"cammy",
+"chun-li",
+"balrog",
+"cody",
+"rolento",
+"ibuki"
+
+]
+}
+
+Ans string
+
+Que: What type is the variable called media?
+Ans: set(string)
+
+Que: For the final question, navigate to the configuration directory called /root/terraform-projects/project-mario.
+
+What is the value of the variable called small?
+Ans:
+variable "region" {
+default = "us-east-1"
+}
+variable "name" {
+type = string
+}
+variable "ami" {
+type = string
+default = "ami-09331245601cf"
+}
+variable "small" {
+type = string
+default = "t2.nano"
+}
+variable "large" {
+type = string
+default = "t2.2xlarge"
+}
+Ans  t2.nano
+
+Que: What is the current value for the variable called name?
+Ans: Undefined
