@@ -1,0 +1,72 @@
+In this lab, we will work on configuration directories that have been created under /root/terraform-projects/S3-Buckets.
+
+Que: Lets first inspect the configuration files in the directory called MCU.
+What is the AWS region configured for use in the provider block? (Assuming we do not pass in additional variables during command execution)
+Ans:
+Information provided in aws configuration file:
+[default]
+region = us-east-1
+Ans us-east-1
+
+Que: There is a resource block configured in the main.tf file in this configuration directory. What is the resource name that will be provisioned when we run terraform apply?
+Ans: resource "aws_s3_bucket" "marvel-cinematic-universe" {
+bucket = "mcu-202011121359"
+
+}
+
+Ans  marvel-cinematic-universe
+
+Que: What is the current state of this configuration directory?
+Ans Resources provisoned
+
+Que: What is the name of S3 bucket that has been created?
+Ans: mcu-202011121359
+
+Que: What is the DNS domain name that is created for this bucket?
+Ans: Ran the terraform show command, got the below details:
+bucket                      = "mcu-202011121359"
+    bucket_domain_name          = "mcu-202011121359.s3.amazonaws.com"
+    bucket_regional_domain_name = "mcu-202011121359.s3.amazonaws.com"
+    force_destroy               = false
+
+Ans  mcu-202011121359.s3.amazonaws.com
+
+Que: The main.tf file is empty. Use it to create a new S3 with the following specifications:
+Ans: resource name: dc_bucket
+bucket name: dc_is_better_than_marvel
+Once the resource block is complete, run a terraform init, plan and apply to try and create the bucket.
+resource "aws_s3_bucket" "dc_bucket" {
+bucket = "dc_is_better_than_marvel"
+}
+
+terraform init and plan ran successfully
+
+Que: Why did the terraform apply command fail?
+Ans: Invalid bucket name
+
+Que: Lets fix that now and change the bucket name so that it uses dashes (-) instead of underscore(_).
+Ans:
+resource name: dc_bucket
+bucket name: dc-is-better-than-marvel
+
+
+Que: Once the resource block is complete, run a terraform init, plan and apply to try and create the bucket.
+resource "aws_s3_bucket" "dc_bucket" {
+bucket = "dc-is-better-than-marvel" 
+}
+
+terraform init, plan and apply command ran successfully
+
+Que: Lets do that now and upload this image to the s3 bucket! Update the main.tf file with the following specifications:
+    • Bucket: pixar-studios-2020
+    • Key: woody.jpg
+    • Source: /root/woody.jpg
+    • Use object (resource) Name: upload
+Once ready, proceed to run terraform init, plan and apply.
+Ans:
+resource "aws_s3_object" "upload" {
+bucket = "pixar-studios-2020"
+key = "woody.jpg"
+source = "/root/woody.jpg"
+}
+terraform init, plan and apply commands ran successfully.
