@@ -1,0 +1,32 @@
+In this lab, we will work with remote terraform state files. We will first start with the local state and then migrate it to remote state with an S3 backend.
+The configuration directory we will work with is /root/terraform-projects/RemoteState
+First, create a simple configuration to create a local_file resource within the directory called RemoteState. The resource block should be created inside the main.tf file. Follow the below specifications for provisioning this resource:
+Resource Name: state
+filename: /root/<variable local-state>
+content: "This configuration uses <variable local-state> state"
+Use the variable called local-state in the variables.tf file which is already created for you and make use of variable interpolation syntax ${..}.
+Once the configuration is ready, run a terraform init, plan and apply.
+Que: Has the state file created?
+Que: What is the name of state file created?
+
+
+
+Que: Now, let us configure the remote backend with s3. Add a terraform block in a new file called terraform.tf with the following arguments:
+bucket: remote-state
+key: terraform.tfstate
+region: us-east-1
+Do not run terraform init yet! Since we are making use of minio we also have to add a couple of additional arguments to get this to work!
+We will do that in the next step. When using the regular s3 service from AWS the above arguments should be sufficient to configure remote state.
+Ans:
+terraform {
+backend "s3" {
+key = "terraform.tfstate"
+region = "us-east-1"
+bucket = "remote-state"
+
+}
+}
+
+Que: To make the s3 backend with Minio to work, we have to add a few additional arguments. The terraform.tf file has been updated. Check it out.
+Try running terraform apply, are you able to do it? If not why?
+Ans: No
