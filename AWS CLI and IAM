@@ -1,0 +1,44 @@
+Que: First, let's explore the AWS CLI configuration. What is the exact version of the CLI installed on the iac-server?
+Ans: Ran the command: aws --version
+
+aws-cli/2.13.12 Python/3.11.4 Linux/5.4.0-1106-gcp exe/x86_64.ubuntu.22 prompt/off
+
+aws-cli/2.13.12 
+
+Que: Which command should be used to interact with Identity and Access Management in AWS using the CLI?
+Ans: iam
+
+Que: Which subcommand with iam can be used to list all the users created in aws?
+Ans: aws iam list-user
+
+Que: Now let's add a few more users! To add more users, we need to make use of the create-user sub-command. However, we also need to pass in a mandatory option with this command for it to work?
+Ans: --user-name
+
+Que: Create a new user called mary using the AWS CLI.
+Ans:: Ran the below command:
+aws --endpoint http://aws:4566 iam create-user --user-name mary
+
+Que: What is the default region that has been configured for use with the AWS CLI?
+Below information is given the aws config file:
+[default]
+region = us-east-1
+Ans: us-east-1
+
+Que: What is the value of aws_access_key_id used in the configuration?
+Below information is given in the aws credentials:
+[default]
+aws_access_key_id = foo
+aws_secret_access_key = bar
+Ans: foo
+
+Que: What is the value aws_secret_access_key used in the configuration?
+Below information is given in the aws credentials:
+[default]
+aws_access_key_id = foo
+aws_secret_access_key = bar
+Ans: bar
+
+Que: jack and jill are developers and are part of a project called project-sapphire.
+Create a new IAM Group called project-sapphire-developers.
+Use the subcommand create-group to create the group.
+Ans: aws --endpoint http://aws:4566 iam create-group --group-name project-sapphire-developers
