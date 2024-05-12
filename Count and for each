@@ -1,0 +1,60 @@
+Que: A new configuration directory has been created at /root/terraform-projects/project-shade. Inspect it. How many files will be created by this configuration?
+Ans: 
+resource "local_sensitive_file" "name" {
+filename = "/root/user-data"
+content = "password: S3cr3tP@ssw0rd"
+}
+Ans: 1
+
+Que: Now add a count argument to create 3 instances of this resource.
+When ready, run terraform init, plan and apply
+Ans: Improvised code:
+resource "local_sensitive_file" "name" {
+filename = "/root/user-data"
+content = "password: S3cr3tP@ssw0rd"
+count = 3
+}
+terraform init, terraform plan and terraform apply commands ran successfully.
+
+Que: The resource local_sensitive_file.name is now created as:
+Ans: list
+
+Que: What is the id for the resource element at index 1?
+Ans: Terraform show command gives below output:
+b90c7e58c1fd82cf9cbe3ddfea5a78edbc9555254a9fff9e"
+    directory_permission = "0700"
+    file_permission      = "0700"
+    filename             = "/root/user-data"
+    id                   = "6b32344cb73c40d126d99ce62309878befca64ce"
+
+6b32344cb73c40d126d99ce62309878befca64ce
+
+Ans: How many files were actually created when apply was run?
+1
+
+Que: We have now created a variables.tf file in the same configuration directory. Update the main.tf file to make use of the list type variable defined for the filename argument.
+Use count to loop through all the elements of this list and do not use hard-coded values.
+Ans: 
+Improvised code:
+resource "local_sensitive_file" "name" {
+filename = var.users[count.index]
+content = var.content
+count = length(var.users)
+}
+
+Que: We have reverted back to the old configuration file and cleaned up the resources created so far.
+A variable called users now has default values added to it.
+What type of variable is it?
+Ans:
+variable "users" {
+type = list(string)
+default = [ "/root/user10", "/root/user11", "/root/user12", "/root/user10"]
+}
+variable "content" {
+default = "password: S3cr3tP@ssw0rd"
+}
+list(string)
+
+
+Que: Can the same elements in this list be used as it is for a set instead?
+Ans: No, Duplication is not allowed
