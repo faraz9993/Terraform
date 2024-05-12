@@ -1,0 +1,87 @@
+Que: We have a directory created called /root/terraform-projects/project-mysterio. The main.tf file already has a couple of resource blocks.
+Which resource types do thelocal_file y use?
+Ans:
+resource "local_file" "file" {
+filename = var.filename
+file_permission = var.permission
+content = random_string.string.id
+}
+
+resource "random_string" "string" {
+length = var.length
+keepers = {
+length = var.length
+} 
+}
+local_file &&  random_string
+
+
+Que: Now, create these two resources that have been defined in this configuration file.
+Ans:
+terraform init
+terraform plan
+terraform apply
+
+Que: Which resource is created first in this case?
+Ans: String [Checked by analyzing terraform execution plan]
+
+Que: We have modified the resource configuration again. Run a terraform plan now. What would happen?
+Ans: Both resources replaced
+
+Que: Why is the string resource being re-created?
+Ans: The value for the argument was changed.
+
+Que: Let's change the order in which the resource called string is recreated. Update the configuration so that when applied, a new random string is created first before the old one is destroyed.
+When ready, apply the changes with terraform apply
+Ans: 
+resource "local_file" "file" {
+filename = var.filename
+file_permission = var.permission
+content = random_string.string.id
+}
+
+resource "random_string" "string" {
+length = var.length
+keepers = {
+length = var.length
+} 
+lifecycle {
+create_before_destroy = true
+}
+}
+
+Que: The resource block for the file resource has been updated! This will force the resource to be recreated during the next apply! But, before that, let's also add a lifecycle rule of create_before_destroy to this resource block.
+When ready, apply the changes with terraform apply
+Important: Once the lifecycle rule has been added, only run the apply command once. We will learn why soon.
+Ans: terraform apply command ran successfully!
+
+Que: Great! We have now added the lifecycle rule and forced the resources to be created first and then destroyed.
+What is the id of the file resource we just created?
+Run terraform show or terraform state show local_file.file to find out.
+Ans:
+directory_permission = "0777"
+    file_permission      = "770"
+    filename             = "/root/random_text"
+    id                   = "2076c81a3a3f22335ea04cd99dbd694ccfef79da"
+
+
+Ans: 2076c81a3a3f22335ea04cd99dbd694ccfef79da
+
+Que: Read the contents of the file /root/random_text manually. (Try opening with Visual Studio Code / cat command or a text editor)
+What is the content of this file?
+Ans: No such file or directory
+
+Que: We have now wiped out the resources that were created in this configuration directory and updated the main.tf file.
+Now, it only contains a single random_pet resource called super_pet.
+Under which circumstances will a new pet id be created?
+Ans: Both
+
+Que: Now, update the configuration so that the resource super_pet is not destroyed under any circumstances with a terraform destroy or terraform apply command.
+Ans:
+resource "random_pet" "super_pet" {
+    length = var.length
+    prefix = var.prefix
+    lifecycle {
+      prevent_destroy = true
+    }
+}
