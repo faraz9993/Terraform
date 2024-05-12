@@ -1,0 +1,55 @@
+Que: IAM with Terraform
+Ans: In this lab, we will learn how to deploy AWS resources using Terraform with the same mocking service that we use in the AWS CLI lab.
+
+Que: Let's start off by creating an IAM User called mary but this time by making use of Terraform. In the configuration directory /root/terraform-projects/IAM, create a file called iam-user.tf with the following specifications:
+Resource Type: aws_iam_user
+Resource Name: users
+Name: mary
+Once the file has been created, run terraform init.
+Ans:
+resource "aws_iam_user" "users" {
+name = "mary"
+}
+Que:
+terraform init command ran successfully.
+Great! We now have a configuration file with a simple resource block for creating an IAM User with Terraform!
+Let's check if everything is in order for us to create this resource.
+Run terraform plan within this configuration.
+Ans: No
+
+Que: Why did the previous command fail?
+Error: Invalid AWS Region: 
+│ 
+│   with provider["registry.terraform.io/hashicorp/aws"],
+│   on <empty> line 0:
+Ans: Region is not set
+
+Que: Add a new file called provider.tf containing a provider block for aws.Inside this block add a single argument called region with the value ca-central-1
+You don't have to run a terraform plan or apply at this stage.
+Ans: 
+provider "aws" {
+region = "ca-central-1"
+
+}
+
+
+Que: Run a terraform plan now. Does it work?
+Ans: No
+
+Que: Great! We have added one user called mary. However, project_sapphire has 5 more people who need access to the AWS Account!
+Let's use the count meta-argument and the new variables.tf file created in the configuration directory to create these additional users!
+
+What is the name of the variable that has been added to the variables.tf file?
+Ans: 
+variable "project-sapphire-users" {
+type = list(string)
+default = [ "mary", "jack", "jill", "mack", "buzz", "mater"]
+}
+
+Ans  project-sapphire-users
+
+Que: What is the data type used for the variable called project-sapphire-users?
+Ans: list(string)
+
+Now, update the iam-user.tf to make use of the count meta-argument to loop through the project-sapphire-users variable and create all the users in the list.
+You may want to make use of the length function to get the length of the list.
