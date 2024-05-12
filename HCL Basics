@@ -1,0 +1,45 @@
+Que: Navigate to the directory /root/terraform-projects/HCL. There is a file present in this location. What is the file extension used by this file? List the file by using the ls command.
+Ans: .tf
+
+Que: What is the resource type specified in this file?
+Ans: local_file
+
+Que: What is the resource name used for thelocal_file resource in this configuration file?
+Ans: games
+
+Que: What is the name of the provider for which we are creating this resource?
+Ans: local
+
+Que: Which one of the below is not an example of an argument used within the resource block?
+Ans: resource_type=local_file
+
+
+Que: If you run a terraform plan now? Would it work?
+Ans: No
+
+Que: What was the version of the local provider plugin that was downloaded?
+Ans: 2.5.1
+
+Que: Now, try to run a terraform plan. Did it print an execution plan as expected?
+Ans: No
+
+Que: Why did the command fail?
+Ans: Invalid argument
+
+Que: Which of the following is not a valid argument for the local_file resource?
+Ans: file
+
+Que: Fix the argument in the configuration file and then run a terraform plan followed by Ans: terraform apply to create the local_file resource called games.
+Ans: 
+resource "local_file" "games" {
+filename = "/root/favorite-games"
+content = "FIFA 21"
+}
+
+Que: We have now created our very first resource using Terraform! Next, let's work on updating the resource.
+Ans: If you look at the output produced by the terraform plan and terraform apply commands closely, we can see that the file content is printed on the screen.
+Since we do not want this to happen, we have updated the resource type.
+What is the resource type that we have updated?
+local_sensitive_file
+
+Finally, destroy this resource using terraform destroy.
