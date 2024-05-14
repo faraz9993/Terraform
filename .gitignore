@@ -1,2 +1,2 @@
-variables.tf
-*.tfstate
+terraform.tfstate
+terraform.tfstate.backup
